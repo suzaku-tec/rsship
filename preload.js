@@ -12,12 +12,16 @@
 // })
 
 
-//　load library
-const feed = require("./feed")
+//　npm liblary
 const fs = require('fs');
+const path = require('path');
+
+// original liblary
+const feed = require("./feed")
 
 process.once('loaded', () => {
   global.feed = feed;
   global.fs = fs;
+  global.path =path;
 });
 

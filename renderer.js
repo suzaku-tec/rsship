@@ -7,19 +7,34 @@
 
 'use strict';
 
-var feed = window.feed
-
-// var test = document.getElementById("test");
-
-// test.onclick = () => {
-//   console.log(feed)
-//   var feedList = document.getElementById("feed-list");
-//   feedList.appendChild(feed.createFeedTag("test"))
-// }
+let feed = window.feed;
+let fs = window.fs;
+let path = window.path;
 
 var feedList = document.getElementById("feed-list");
 
+const feed_path = "feed";
+
+// rssファイルの読み込み
+fs.readdir(feed_path, (err, fileNames) => {
+  fileNames.forEach(fileName => {
+
+    const jsonFilePath = path.join(feed_path, fileName)
+    let json = JSON.parse(fs.readFileSync(jsonFilePath, 'utf8'));
+
+    // 未読数のカウント
+    let count = json.items.reduce((prev, item) => {
+      return prev + (item.isRead ? 0 : 1)
+    }, 0)
+
+    var feedTag = feed.createFeedTag(fileName, count);
+    feedList.appendChild(feedTag)
+  });
+});
 
 
+function setRssView(pathName) {
+
+}
 
 // https://suzaku-tec.hatenadiary.jp/rss
