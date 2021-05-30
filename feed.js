@@ -1,10 +1,8 @@
 'use strict';
 
+let Parser = require('rss-parser');
+let parser = new Parser();
 class Feed {
-
-  // static createFeedTag(feedName) {
-  //   this.createFeedTag(feedName, null)
-  // }
 
   /**
    *
@@ -45,6 +43,7 @@ class Feed {
 
     return span;
   }
+
 }
 
 module.exports = Feed

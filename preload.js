@@ -15,6 +15,7 @@
 //　npm liblary
 const fs = require('fs');
 const path = require('path');
+const gridjs = require("gridjs")
 
 // original liblary
 const feed = require("./feed")
@@ -23,5 +24,6 @@ process.once('loaded', () => {
   global.feed = feed;
   global.fs = fs;
   global.path =path;
+  global.Grid = gridjs.Grid
 });
 
