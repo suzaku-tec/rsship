@@ -12,7 +12,7 @@ class Feed {
    */
   static createFeedTag(feedName, cnt) {
     var li = document.createElement("li");
-    li.className = "list-group-item d-flex justify-content-between align-items-center";
+    li.className = "list-group-item d-flex justify-content-between align-items-center cursor-hand";
     li.innerText = feedName;
 
     if(cnt) {
@@ -44,6 +44,11 @@ class Feed {
     return span;
   }
 
+  static async getRssFeed(url) {
+    let rssItem = await parser.parseURL(url);
+    rssItem.feedUrl = url
+    return rssItem;
+  }
 }
 
 module.exports = Feed
