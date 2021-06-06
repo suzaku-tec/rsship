@@ -124,10 +124,10 @@ function reload(filePath) {
     var link = row.cells[2].data
 
     console.log(row)
-    let filePath = document.getElementById("feedFilePath").value
+    let feedFilePath = document.getElementById("feedFilePath").value
 
     // 選択した行を既読にする
-    let rssJson = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    let rssJson = JSON.parse(fs.readFileSync(feedFilePath, 'utf8'));
     rssJson.items.filter(item => {
       return item.link === link
     }).forEach(item => {
@@ -136,7 +136,7 @@ function reload(filePath) {
 
     // JSONを更新
     fs.writeFileSync(
-      path.resolve(filePath),
+      path.resolve(feedFilePath),
       JSON.stringify(rssJson, null, 2),
       (err) => {
         if (err) throw err;
