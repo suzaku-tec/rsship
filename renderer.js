@@ -108,9 +108,11 @@ function reload(filePath) {
   })
 
   if(grid) {
+    // データの更新だけして終了
     grid.updateConfig({
       data: data
     }).forceRender();
+    return;
   } else {
     grid = new Grid({
       columns: ["title", "pubDate", {name: "link", hidden: true}],
@@ -142,6 +144,8 @@ function reload(filePath) {
         if (err) throw err;
       }
     )
+
+    reload(feedFilePath);
   })
 }
 
