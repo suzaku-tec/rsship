@@ -110,7 +110,7 @@ function reload(filePath) {
   if(grid) {
     grid.updateConfig({
       data: data
-    })
+    }).forceRender();
   } else {
     grid = new Grid({
       columns: ["title", "pubDate", {name: "link", hidden: true}],
