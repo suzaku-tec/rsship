@@ -16,6 +16,8 @@ var feedList = document.getElementById("feed-list");
 
 const feed_path = "feed";
 
+var grid = null;
+
 // rssファイルの読み込み
 fs.readdir(feed_path, (err, fileNames) => {
   fileNames.forEach(fileName => {
@@ -36,10 +38,65 @@ fs.readdir(feed_path, (err, fileNames) => {
 });
 
 // event handler
-function setFeedItemList(e) {
-  let json = JSON.parse(fs.readFileSync(this.filePath, 'utf8'));
 
-  // 表示対象のデータを取得
+/**
+ * show feed item list
+ *
+ * @param {*} e
+ */
+function setFeedItemList(e) {
+  reload(this.filePath)
+}
+
+
+var reloadButton = document.getElementById("reloadButton")
+reloadButton.addEventListener("click", async () => {
+  // サイトから最新のフィード情報取得
+  var docs = document.getElementById("docs").value;
+  var feedItems = await feed.getRssFeed(docs);
+
+  // ファイルのフィード情報取得
+  var feedFilePath = document.getElementById("feedFilePath").value;
+  let json = JSON.parse(fs.readFileSync(feedFilePath, 'utf8'));
+
+  // 差分の抽出
+  var diffList = feedItems.items.filter(feedItem => {
+    return !json.items.find(jsonItem => {
+      return jsonItem.link === feedItem.link
+    })
+  })
+
+  // 最近追加されたものなら追加
+  diffList.forEach(addItem => {
+    if(json.items[0].isoDate < addItem.isoDate) {
+      json.items.unshift(addItem)
+    }
+  })
+
+  // ファイルに反映
+  if (diffList.length) {
+    fs.writeFileSync(
+      path.resolve(feedFilePath),
+      JSON.stringify(json, null, 2),
+      (err) => {
+        if (err) throw err;
+      }
+    )
+  }
+
+  reload(feedFilePath)
+})
+
+/**
+ * フィード一覧の更新
+ * @param {読み込むファイルパス} filePath
+ */
+function reload(filePath) {
+  let json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+  document.getElementById("docs").value = json.feedUrl;
+  document.getElementById("feedFilePath").value = filePath
+
   var data = json.items.filter(item => {
     return !item.isRead
   }).map(item => {
@@ -50,19 +107,28 @@ function setFeedItemList(e) {
     ]
   })
 
-  // 画面表示データの生成
-  const grid = new Grid({
-    columns: ["title", "pubDate", {name: "link", hidden: true}],
-    data: data
-  }).render(document.getElementById("feedItemList"));
+  if(grid) {
+    grid.updateConfig({
+      data: data
+    })
+  } else {
+    grid = new Grid({
+      columns: ["title", "pubDate", {name: "link", hidden: true}],
+      data: data
+    }).render(document.getElementById("feedItemList"));
+  }
+
 
   // 既読処理
   grid.on("rowClick", (e, row) => {
     var link = row.cells[2].data
 
+    console.log(row)
+    let filePath = document.getElementById("feedFilePath").value
+
     // 選択した行を既読にする
-    let json = JSON.parse(fs.readFileSync(this.filePath, 'utf8'));
-    json.items.filter(item => {
+    let rssJson = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    rssJson.items.filter(item => {
       return item.link === link
     }).forEach(item => {
       item.isRead = true
@@ -70,16 +136,14 @@ function setFeedItemList(e) {
 
     // JSONを更新
     fs.writeFileSync(
-      path.resolve(this.filePath),
-      JSON.stringify(json, null, 2),
+      path.resolve(filePath),
+      JSON.stringify(rssJson, null, 2),
       (err) => {
         if (err) throw err;
       }
     )
   })
 }
-
-
 
 
 // https://suzaku-tec.hatenadiary.jp/rss
