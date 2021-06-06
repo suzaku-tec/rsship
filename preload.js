@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const gridjs = require("gridjs")
+const log = require('electron-log');
 
 // original liblary
 const feed = require("./feed")
@@ -25,5 +26,6 @@ process.once('loaded', () => {
   global.fs = fs;
   global.path =path;
   global.Grid = gridjs.Grid
+  global.log = log;
 });
 
