@@ -12,13 +12,13 @@
 // })
 
 
-//　npm liblary
+//　npm library
 const fs = require('fs');
 const path = require('path');
 const gridjs = require("gridjs")
 const log = require('electron-log');
 
-// original liblary
+// original library
 const feed = require("./feed");
 const tab = require("./tab");
 
