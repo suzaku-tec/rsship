@@ -19,13 +19,15 @@ const gridjs = require("gridjs")
 const log = require('electron-log');
 
 // original liblary
-const feed = require("./feed")
+const feed = require("./feed");
+const tab = require("./tab");
 
 process.once('loaded', () => {
   global.feed = feed;
   global.fs = fs;
   global.path =path;
-  global.Grid = gridjs.Grid
+  global.Grid = gridjs.Grid;
   global.log = log;
+  global.tab = tab;
 });
 

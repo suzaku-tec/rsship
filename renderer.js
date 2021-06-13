@@ -8,9 +8,12 @@
 'use strict';
 
 let feed = window.feed;
+let Tab = window.tab;
+
 let fs = window.fs;
 let path = window.path;
 let Grid = window.Grid;
+let showOpenDialog = window.showOpenDialog
 
 var feedList = document.getElementById("feed-list");
 
@@ -30,7 +33,8 @@ fs.readdir(feed_path, (err, fileNames) => {
       return prev + (item.isRead ? 0 : 1)
     }, 0)
 
-    var feedTag = feed.createFeedTag(fileName, count);
+    let tagName = path.basename(fileName);
+    var feedTag = feed.createFeedTag(tagName, count);
     feedTag.addEventListener("click", {filePath: jsonFilePath, handleEvent: setFeedItemList});
 
     feedList.appendChild(feedTag)
@@ -149,5 +153,45 @@ function reload(filePath) {
   })
 }
 
+var modalCloseElements = document.getElementsByClassName("modal-close");
+Array.prototype.forEach.call(modalCloseElements, (mcEl) => {
+  mcEl.addEventListener("click", () => {
+    var dialog = document.getElementById("msg-modal")
+    dialog.classList.remove("modal.show")
+    dialog.classList.add("modal.fade");
+    })
+})
 
-// https://suzaku-tec.hatenadiary.jp/rss
+
+$('#exampleModal').on('hidden.bs.modal', function () {
+  var opmlPath = document.getElementById("opmlImport").value;
+  if(opmlPath) {
+    console.log(opmlPath)
+    console.log(fs.readFileSync(opmlPath))
+  }
+})
+
+
+var closeBtn = document.getElementById("closeBtn");
+closeBtn.addEventListener("click", () => {
+  var opml = document.getElementById("opmlImport").value;
+})
+
+
+function init() {
+  var tab = new Tab();
+  tab.addTab("sample")
+}
+
+$("#fileSelect").on("click", () => {
+  openFile();
+})
+
+//openFileボタンが押されたとき（ファイル名取得まで）
+function openFile() {
+  const result = showOpenDialog(window)
+  console.log(result)
+}
+
+init();
+
