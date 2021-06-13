@@ -15,6 +15,8 @@ let path = window.path;
 let Grid = window.Grid;
 let showOpenDialog = window.showOpenDialog
 
+const { ipcRenderer } = window.native;
+
 var feedList = document.getElementById("feed-list");
 
 const feed_path = "feed";
@@ -194,4 +196,17 @@ function openFile() {
 }
 
 init();
+
+ipcRenderer.on('async-reply', (event, arg) => {
+  // 受信時のコールバック関数
+  console.log(arg) // pong
+});
+
+
+// 非同期メッセージの送信
+ipcRenderer.send('async-message', 'ping')
+
+// 同期メッセージを送信して、返信内容を表示する
+const retValue = ipcRenderer.sendSync('sync-message', 'ping');
+console.log(retValue) // pong
 

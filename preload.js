@@ -18,6 +18,8 @@ const path = require('path');
 const gridjs = require("gridjs")
 const log = require('electron-log');
 
+const {ipcRenderer} = require('electron');
+
 // original library
 const feed = require("./feed");
 const tab = require("./tab");
@@ -29,5 +31,8 @@ process.once('loaded', () => {
   global.Grid = gridjs.Grid;
   global.log = log;
   global.tab = tab;
-});
 
+  global.native = {
+    ipcRenderer: ipcRenderer,
+  };
+});
