@@ -18,11 +18,14 @@ const path = require('path');
 const gridjs = require("gridjs")
 const log = require('electron-log');
 
-const {ipcRenderer} = require('electron');
-
+const { ipcRenderer } = require('electron');
 // original library
 const feed = require("./feed");
 const tab = require("./tab");
+const { RsshipIpcToMainArgs, RsshipIpcToRendererArgs } = require("./rsshipIpcArgs")
+const RssIpcEvent =  require("./rsshipIpcEvent")
+const RsshipOpenDialog = require("./rsshipOpenDialog")
+const { RsshipIpcMain, RsshipIpcRenderer } = require("./rsshipIpc")
 
 process.once('loaded', () => {
   global.feed = feed;
@@ -34,5 +37,11 @@ process.once('loaded', () => {
 
   global.native = {
     ipcRenderer: ipcRenderer,
+    rsshipIpcRenderer: new RsshipIpcRenderer(ipcRenderer),
+    RsshipIpcToMainArgs: RsshipIpcToMainArgs,
+    RsshipIpcToRendererArgs: RsshipIpcToRendererArgs,
+    RssIpcEvent: RssIpcEvent,
+
+    RsshipOpenDialog: RsshipOpenDialog,
   };
 });

@@ -1,6 +1,14 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
+const { RsshipIpcToRendererArgs } = require("./rsshipIpcArgs")
+
+const { RsshipIpcMain, RsshipIpcRenderer } = require("./rsshipIpc")
+
+const ipcMainProcessEventList = [
+  {id: "showDialog", action: () => {}},
+]
+
 
 const ElectronStore = require("electron-store")
 const config = new ElectronStore({
@@ -8,7 +16,6 @@ const config = new ElectronStore({
   name: "config",
   fileExtension: 'json'
 })
-
 
 function createWindow () {
   // Create the browser window.
@@ -55,25 +62,12 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-//IPCメッセージの受信部(レンダラープロセスから送られる)//
-ipcMain.on("msg_render_to_main", (event, arg) => {
-  console.log(arg); //printing "good job"
+var rsshipIpcMain = new RsshipIpcMain(ipcMain);
+rsshipIpcMain.addAsyncAction("test", (value) => {
+  return new RsshipIpcToRendererArgs("test", "pong")
 });
 
-// 非同期メッセージの受信と返信
-ipcMain.on('async-message', (event, arg) => {
-  // 受信したコマンドの引数を表示する
-  console.log(arg) // ping
-
-  // 送信元のチャンネル('asynchronous-reply')に返信する
-  event.reply('async-reply', 'pong')
-})
-
-
-// 同期メッセージの受信と返信
-ipcMain.on('sync-message', (event, arg) => {
-  console.log(arg) // ping
-
-  // 非同期との違いは reply を使うか returnValue を使うか
-  event.returnValue = 'pong2'
-})
+rsshipIpcMain.addSyncAction("test", (value) => {
+  console.log("rsshipIpcMain value:" + value)
+  return new RsshipIpcToRendererArgs("test", "pong")
+});

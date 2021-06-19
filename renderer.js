@@ -13,9 +13,8 @@ let Tab = window.tab;
 let fs = window.fs;
 let path = window.path;
 let Grid = window.Grid;
-let showOpenDialog = window.showOpenDialog
 
-const { ipcRenderer } = window.native;
+const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer } = window.native;
 
 var feedList = document.getElementById("feed-list");
 
@@ -191,22 +190,10 @@ $("#fileSelect").on("click", () => {
 
 //openFileボタンが押されたとき（ファイル名取得まで）
 function openFile() {
-  const result = showOpenDialog(window)
-  console.log(result)
+  var arg = new RsshipIpcToMainArgs();
+  arg.type = RsshipOpenDialog.MessageType;
 }
 
 init();
 
-ipcRenderer.on('async-reply', (event, arg) => {
-  // 受信時のコールバック関数
-  console.log(arg) // pong
-});
-
-
-// 非同期メッセージの送信
-ipcRenderer.send('async-message', 'ping')
-
-// 同期メッセージを送信して、返信内容を表示する
-const retValue = ipcRenderer.sendSync('sync-message', 'ping');
-console.log(retValue) // pong
-
+rsshipIpcRenderer.sendAsync("test", {a: "a1"})
