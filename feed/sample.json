@@ -43,7 +43,8 @@
         "思ひ出",
         "学習"
       ],
-      "isoDate": "2021-05-23T12:30:55.000Z"
+      "isoDate": "2021-05-23T12:30:55.000Z",
+      "isRead": true
     },
     {
       "title": "2021/05/10週 気づきと振り返り 広い作業スペースはサイコー",
@@ -67,7 +68,8 @@
         "学習",
         "試験"
       ],
-      "isoDate": "2021-05-16T13:58:37.000Z"
+      "isoDate": "2021-05-16T13:58:37.000Z",
+      "isRead": true
     },
     {
       "title": "2021/04/26週+5/3週 気づきと振り返り GW明けは休み疲れがひどかった。。。",
@@ -96,7 +98,8 @@
         "情報収集",
         "開発環境"
       ],
-      "isoDate": "2021-05-08T01:36:07.000Z"
+      "isoDate": "2021-05-08T01:36:07.000Z",
+      "isRead": true
     },
     {
       "title": "windowsでnpmの更新に失敗していたので解消して優勝する",
@@ -119,7 +122,8 @@
         "JavaScript",
         "npm"
       ],
-      "isoDate": "2021-04-29T06:15:37.000Z"
+      "isoDate": "2021-04-29T06:15:37.000Z",
+      "isRead": true
     },
     {
       "title": "2021/04/12週 気づきと振り返り Azure Functionsは怖くない",
@@ -145,7 +149,8 @@
         "思ひ出",
         "恥晒し"
       ],
-      "isoDate": "2021-04-19T15:55:34.000Z"
+      "isoDate": "2021-04-19T15:55:34.000Z",
+      "isRead": true
     },
     {
       "title": "【Java】Java16先取り調査 環境構築編",
@@ -163,7 +168,8 @@
         "Java",
         "開発環境"
       ],
-      "isoDate": "2021-03-12T23:48:46.000Z"
+      "isoDate": "2021-03-12T23:48:46.000Z",
+      "isRead": true
     },
     {
       "title": "2021/02/01週 気づきと振り返り 「辛い」しか思いつかない",
@@ -181,7 +187,8 @@
         "メンタル",
         "テスト"
       ],
-      "isoDate": "2021-02-09T15:12:34.000Z"
+      "isoDate": "2021-02-09T15:12:34.000Z",
+      "isRead": true
     },
     {
       "title": "【書評】コンピュータアーキテクチャのエッセンス",
@@ -660,5 +667,6 @@
   "generator": "Hatena::Blog",
   "link": "https://suzaku-tec.hatenadiary.jp/",
   "lastBuildDate": "Sun, 23 May 2021 22:07:50 +0900",
-  "docs": "http://blogs.law.harvard.edu/tech/rss"
+  "docs": "http://blogs.law.harvard.edu/tech/rss",
+  "feedUrl": "https://suzaku-tec.hatenadiary.jp/rss"
 }

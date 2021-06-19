@@ -3,12 +3,9 @@ const {app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const { RsshipIpcToRendererArgs } = require("./rsshipIpcArgs")
 
-const { RsshipIpcMain, RsshipIpcRenderer } = require("./rsshipIpc")
-
-const ipcMainProcessEventList = [
-  {id: "showDialog", action: () => {}},
-]
-
+const { RsshipIpcMain } = require("./rsshipIpc")
+const RsshipOpenDialog = require("./rsshipOpenDialog");
+const rsshipOpenDialog = new RsshipOpenDialog();
 
 const ElectronStore = require("electron-store")
 const config = new ElectronStore({
@@ -64,6 +61,7 @@ app.on('window-all-closed', function () {
 
 var rsshipIpcMain = new RsshipIpcMain(ipcMain);
 rsshipIpcMain.addAsyncAction("test", (value) => {
+  console.log("rsshipIpcMain value:" + value)
   return new RsshipIpcToRendererArgs("test", "pong")
 });
 
@@ -71,3 +69,5 @@ rsshipIpcMain.addSyncAction("test", (value) => {
   console.log("rsshipIpcMain value:" + value)
   return new RsshipIpcToRendererArgs("test", "pong")
 });
+
+rsshipIpcMain.addSyncAction(RsshipOpenDialog.MessageType, rsshipOpenDialog.mainProcAction)

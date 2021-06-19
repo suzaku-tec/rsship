@@ -13,19 +13,21 @@ class RsshipIpcMain {
       if(request.type) {
         var eventObj = this._asyncActionList.find(asyncAction => asyncAction.type === request.type)
         if(eventObj) {
-          response = eventObj.action(request.value)
+          var result = eventObj.action(request.value)
+          response = new RsshipIpcToRendererArgs(request.type, result)
         }
       }
       event.reply('async-reply', response)
     });
 
-    ipcMain.on('sync-message', (event, request) => {
+    ipcMain.on('sync-message', async(event, request) => {
       console.log(request)
       var response = this._generateErrorResponse();
       if(request.type) {
-        var action = this._syncActionList.find(syncAction => syncAction.type === request.type)
-        if(action) {
-          response = action.action(request.value)
+        var actionObj = this._syncActionList.find(syncAction => syncAction.type === request.type)
+        if(actionObj) {
+          console.log("actionObj:", actionObj)
+          response = actionObj.action(request.value)
         }
       }
       event.returnValue = response
@@ -33,12 +35,10 @@ class RsshipIpcMain {
   }
 
   addAsyncAction(type, action) {
-    console.log("addAsyncAction type:" + JSON.stringify(type) + " action:" + action)
     this._asyncActionList.push({type: type, action: action})
   }
 
   addSyncAction(type, action) {
-    console.log("addSyncAction type:" + JSON.stringify(type) + " action:" + JSON.stringify(action))
     this._syncActionList.push({type: type, action: action})
   }
 
@@ -68,7 +68,7 @@ class RsshipIpcRenderer {
     var arg = new RsshipIpcToMainArgs();
     arg.type = type
     arg.value = value
-    return this._ipcRenderer.sendSync('sync-message', arg)
+    return this._ipcRenderer.sendSync('sync-message', arg)[0]
   }
 
   /**

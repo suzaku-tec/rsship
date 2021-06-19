@@ -14,7 +14,7 @@ let fs = window.fs;
 let path = window.path;
 let Grid = window.Grid;
 
-const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer } = window.native;
+const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer, RsshipOpenDialog } = window.native;
 
 var feedList = document.getElementById("feed-list");
 
@@ -184,7 +184,7 @@ function init() {
   tab.addTab("sample")
 }
 
-$("#fileSelect").on("click", () => {
+$("#opmlFileSelect").on("click", () => {
   openFile();
 })
 
@@ -192,8 +192,9 @@ $("#fileSelect").on("click", () => {
 function openFile() {
   var arg = new RsshipIpcToMainArgs();
   arg.type = RsshipOpenDialog.MessageType;
+  var res = rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
+  console.log(res)
+  $("#opmlFilePath").text(res)
 }
 
 init();
-
-rsshipIpcRenderer.sendAsync("test", {a: "a1"})
