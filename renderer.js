@@ -165,17 +165,19 @@ Array.prototype.forEach.call(modalCloseElements, (mcEl) => {
 
 
 $('#exampleModal').on('hidden.bs.modal', function () {
-  var opmlPath = document.getElementById("opmlImport").value;
+  var opmlPath = document.getElementById("opmlFilePath").value;
   if(opmlPath) {
     console.log(opmlPath)
     console.log(fs.readFileSync(opmlPath))
   }
 })
 
+$("#importOpml").on("click", () => {
+  var opmlPath = $('#opmlFilePath').text()
 
-var closeBtn = document.getElementById("closeBtn");
-closeBtn.addEventListener("click", () => {
-  var opml = document.getElementById("opmlImport").value;
+  if(opmlPath) creteFeedForOpml(opmlPath)
+
+  $('#exampleModal').modal('hide')
 })
 
 
@@ -183,6 +185,11 @@ function init() {
   var tab = new Tab();
   tab.addTab("sample")
 }
+
+$("#testAction").on("click", () => {
+  console.log("test")
+  showMessageDialog("test", "test action message")
+})
 
 $("#opmlFileSelect").on("click", () => {
   openFile();
@@ -195,6 +202,58 @@ function openFile() {
   var res = rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
   console.log(res)
   $("#opmlFilePath").text(res)
+}
+
+async function creteFeedForOpml(opmlPath) {
+  var contents = fs.readFileSync(opmlPath, 'utf8')
+  const opml = new DOMParser().parseFromString(contents, "text/xml");
+
+  var outlines = opml.getElementsByTagName("outline");
+
+  var errFeedList = []
+  for (const outline in outlines) {
+    if (Object.hasOwnProperty.call(outlines, outline)) {
+      const element = outlines[outline];
+
+      var feedUrl = element.getAttribute("xmlUrl")
+
+      if(!feedUrl) continue;
+
+      var feedTitle = element.getAttribute("text")
+      console.log(feedUrl);
+      try {
+        var feedItems = await feed.getRssFeed(feedUrl);
+        console.log(feedItems)
+
+        var feedFilePath = path.join(feed_path, feedTitle + ".json")
+
+        fs.writeFileSync(
+          path.resolve(feedFilePath),
+          JSON.stringify(feedItems, null, 2),
+          (err) => {
+            if (err) throw err;
+          }
+        );
+      } catch(e) {
+        errFeedList.push(feedTitle)
+      }
+    }
+  }
+
+  console.log("errFeedList: ", errFeedList)
+}
+
+function showMessageDialog(title, messageTxt) {
+  $("#messageModalLabel").text(title)
+  $("#messageModalMessage").text(messageTxt)
+  $('#messageModal').modal()
+}
+
+function showMessageDialogCustom(title, bodyHtml, footerHtml) {
+  $("#messageModalLabel").text(title)
+  $("#msgModalBody").html(bodyHtml)
+  $("#msgModalFooter").html(footerHtml)
+  $('#messageModal').modal()
 }
 
 init();
