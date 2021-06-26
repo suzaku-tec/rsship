@@ -1,3 +1,5 @@
+'use strict';
+
 const mainProcessNm = "main"
 const rendererProcessNm = "renderer"
 

@@ -1,3 +1,5 @@
+'use strict';
+
 class RssIpcEvent {
   mainProcAction() {
     throw new Error("Not overridden!")

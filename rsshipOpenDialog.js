@@ -1,3 +1,5 @@
+'use strict';
+
 const RssIpcEvent = require("./rsshipIpcEvent");
 const { dialog } = require('electron')
 

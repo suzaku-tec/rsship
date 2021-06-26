@@ -1,3 +1,5 @@
+'use strict';
+
 const { RsshipIpcToRendererArgs } = require("./rsshipIpcArgs");
 const { decycle } = require('json-cyclic');
 

@@ -11,6 +11,7 @@
 //   }
 // })
 
+'use strict';
 
 //　npm library
 const fs = require('fs');

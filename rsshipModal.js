@@ -1,3 +1,4 @@
+'use strict';
 class RsshipModal {
 
   showOpmlImportDialog() {
