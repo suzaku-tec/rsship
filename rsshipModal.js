@@ -5,6 +5,7 @@ const path = require('path');
 
 const { RsshipIpcToMainArgs } = require("./rsshipIpcArgs")
 
+const MODAL_NAME = '#exampleModal'
 class RsshipModal {
 
   constructor(rsshipIpcRenderer) {
@@ -12,7 +13,7 @@ class RsshipModal {
   }
 
   setupModal() {
-    $('#exampleModal').on('hidden.bs.modal', () => {
+    $(MODAL_NAME).on('hidden.bs.modal', () => {
       var opmlPath = document.getElementById("opmlFilePath");
       if(opmlPath && opmlPath.nodeValue) {
         console.log(opmlPath)
@@ -76,7 +77,7 @@ class RsshipModal {
   }
 
   _getModal() {
-    return $('#exampleModal')
+    return $(MODAL_NAME)
   }
 
   _getModalBody() {
