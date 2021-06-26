@@ -1,5 +1,27 @@
 'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const { RsshipIpcToMainArgs } = require("./rsshipIpcArgs")
+
 class RsshipModal {
+
+  constructor(rsshipIpcRenderer) {
+    this._rsshipIpcRenderer = rsshipIpcRenderer;
+  }
+
+  setupModal() {
+    $('#exampleModal').on('hidden.bs.modal', () => {
+      var opmlPath = document.getElementById("opmlFilePath");
+      if(opmlPath && opmlPath.nodeValue) {
+        console.log(opmlPath)
+        console.log(fs.readFileSync(opmlPath))
+      }
+
+      this._initModal();
+    })
+  }
 
   showOpmlImportDialog() {
     this._setModalTitle("Import Opml File");
@@ -16,13 +38,24 @@ class RsshipModal {
     `
     this._getModalFooter().append(footer)
 
+    $("#opmlFileSelect").on("click", () => {
+      this._openFile();
+    })
+
+    $("#importOpml").on("click", () => {
+      var opmlPath = $('#opmlFilePath').text()
+
+      if(opmlPath) this._creteFeedForOpml(opmlPath)
+
+      $('#exampleModal').modal('hide')
+    })
+
     this._getModal().modal()
   }
 
   showProgressModal(title) {
     var body = `
-      <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+      <div class="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
       </div>
       `
       this._getModalBody().append(body)
@@ -58,11 +91,62 @@ class RsshipModal {
     $("#exampleModalTitle").text(title)
   }
 
-  initModal() {
+  _initModal() {
     $("#exampleModalTitle").empty()
     $('#exampleModalBody').empty()
     $('#exampleModalFooter').empty()
   }
+
+  //openFileボタンが押されたとき（ファイル名取得まで）
+  _openFile() {
+    var arg = new RsshipIpcToMainArgs();
+    arg.type = RsshipOpenDialog.MessageType;
+    var res = rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
+    $("#opmlFilePath").text(res)
+  }
+
+  async _creteFeedForOpml(opmlPath) {
+    var contents = fs.readFileSync(opmlPath, 'utf8')
+    const opml = new DOMParser().parseFromString(contents, "text/xml");
+
+    var outlines = opml.getElementsByTagName("outline");
+
+    var errFeedList = []
+    for (const outline in outlines) {
+      if (Object.hasOwnProperty.call(outlines, outline)) {
+        const element = outlines[outline];
+
+        var feedUrl = element.getAttribute("xmlUrl")
+
+        if(!feedUrl) continue;
+
+        var feedTitle = element.getAttribute("text")
+        console.log(feedUrl);
+        try {
+          var feedItems = await feed.getRssFeed(feedUrl);
+          console.log(feedItems)
+
+          var feedFilePath = path.join(feed_path, feedTitle + ".json")
+
+          fs.writeFileSync(
+            path.resolve(feedFilePath),
+            JSON.stringify(feedItems, null, 2),
+            (err) => {
+              if (err) throw err;
+            }
+          );
+        } catch(e) {
+          errFeedList.push(feedTitle)
+        }
+      }
+    }
+
+    if(errFeedList) {
+      var errorListStr = errFeedList.join("<br>")
+      this.showMessageDialog("取り込みエラー", "以下のRSSは読み取れませんでした。<br>" + errorListStr)
+    }
+  }
+
 }
 
 module.exports = { RsshipModal }

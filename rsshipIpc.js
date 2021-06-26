@@ -70,7 +70,7 @@ class RsshipIpcRenderer {
     var arg = new RsshipIpcToMainArgs();
     arg.type = type
     arg.value = value
-    return this._ipcRenderer.sendSync('sync-message', arg)[0]
+    return this._ipcRenderer.sendSync('sync-message', arg)
   }
 
   /**

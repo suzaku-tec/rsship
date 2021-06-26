@@ -30,6 +30,8 @@ const { RsshipIpcMain, RsshipIpcRenderer } = require("./rsshipIpc")
 
 const { RsshipModal } = require("./rsshipModal")
 
+const rsshipIpcRenderer = new RsshipIpcRenderer(ipcRenderer)
+
 process.once('loaded', () => {
   global.feed = feed;
   global.fs = fs;
@@ -40,12 +42,12 @@ process.once('loaded', () => {
 
   global.native = {
     ipcRenderer: ipcRenderer,
-    rsshipIpcRenderer: new RsshipIpcRenderer(ipcRenderer),
+    rsshipIpcRenderer: rsshipIpcRenderer,
     RsshipIpcToMainArgs: RsshipIpcToMainArgs,
     RsshipIpcToRendererArgs: RsshipIpcToRendererArgs,
     RssIpcEvent: RssIpcEvent,
 
     RsshipOpenDialog: RsshipOpenDialog,
-    rsshipModal: new RsshipModal()
+    rsshipModal: new RsshipModal(rsshipIpcRenderer)
   };
 });

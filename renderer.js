@@ -164,100 +164,12 @@ Array.prototype.forEach.call(modalCloseElements, (mcEl) => {
 })
 
 
-$('#exampleModal').on('hidden.bs.modal', function () {
-  var opmlPath = document.getElementById("opmlFilePath").value;
-  if(opmlPath) {
-    console.log(opmlPath)
-    console.log(fs.readFileSync(opmlPath))
-  }
-  rsshipModal.initModal();
-})
-
-$("#importOpml").on("click", () => {
-  var opmlPath = $('#opmlFilePath').text()
-
-  if(opmlPath) creteFeedForOpml(opmlPath)
-
-  $('#exampleModal').modal('hide')
-})
-
 
 function init() {
   var tab = new Tab();
   tab.addTab("sample")
 }
 
-$("#testAction").on("click", () => {
-  console.log("test")
-  showMessageDialog("test", "test action message")
-})
-
-$("#opmlFileSelect").on("click", () => {
-  openFile();
-})
-
-//openFileボタンが押されたとき（ファイル名取得まで）
-function openFile() {
-  var arg = new RsshipIpcToMainArgs();
-  arg.type = RsshipOpenDialog.MessageType;
-  var res = rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
-  console.log(res)
-  $("#opmlFilePath").text(res)
-}
-
-async function creteFeedForOpml(opmlPath) {
-  var contents = fs.readFileSync(opmlPath, 'utf8')
-  const opml = new DOMParser().parseFromString(contents, "text/xml");
-
-  var outlines = opml.getElementsByTagName("outline");
-
-  var errFeedList = []
-  for (const outline in outlines) {
-    if (Object.hasOwnProperty.call(outlines, outline)) {
-      const element = outlines[outline];
-
-      var feedUrl = element.getAttribute("xmlUrl")
-
-      if(!feedUrl) continue;
-
-      var feedTitle = element.getAttribute("text")
-      console.log(feedUrl);
-      try {
-        var feedItems = await feed.getRssFeed(feedUrl);
-        console.log(feedItems)
-
-        var feedFilePath = path.join(feed_path, feedTitle + ".json")
-
-        fs.writeFileSync(
-          path.resolve(feedFilePath),
-          JSON.stringify(feedItems, null, 2),
-          (err) => {
-            if (err) throw err;
-          }
-        );
-      } catch(e) {
-        errFeedList.push(feedTitle)
-      }
-    }
-  }
-
-  if(errFeedList) {
-    var errorListStr = errFeedList.join("<br>")
-    showMessageDialog("取り込みエラー", "以下のRSSは読み取れませんでした。<br>" + errorListStr)
-  }
-}
-
-function showMessageDialog(title, messageTxt) {
-  $("#messageModalLabel").text(title)
-  $("#messageModalMessage").text(messageTxt)
-  $('#messageModal').modal()
-}
-
-function showMessageDialogCustom(title, bodyHtml, footerHtml) {
-  $("#messageModalLabel").text(title)
-  $("#msgModalBody").html(bodyHtml)
-  $("#msgModalFooter").html(footerHtml)
-  $('#messageModal').modal()
-}
+rsshipModal.setupModal()
 
 init();
