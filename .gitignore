@@ -91,3 +91,6 @@ typings/
 
 # config.json
 config.json
+
+# feed json
+feed/
