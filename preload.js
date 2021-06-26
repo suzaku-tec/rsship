@@ -27,6 +27,8 @@ const RssIpcEvent =  require("./rsshipIpcEvent")
 const RsshipOpenDialog = require("./rsshipOpenDialog")
 const { RsshipIpcMain, RsshipIpcRenderer } = require("./rsshipIpc")
 
+const { RsshipModal } = require("./rsshipModal")
+
 process.once('loaded', () => {
   global.feed = feed;
   global.fs = fs;
@@ -43,5 +45,6 @@ process.once('loaded', () => {
     RssIpcEvent: RssIpcEvent,
 
     RsshipOpenDialog: RsshipOpenDialog,
+    rsshipModal: new RsshipModal()
   };
 });

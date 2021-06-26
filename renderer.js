@@ -14,7 +14,7 @@ let fs = window.fs;
 let path = window.path;
 let Grid = window.Grid;
 
-const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer, RsshipOpenDialog } = window.native;
+const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer, RsshipOpenDialog, rsshipModal } = window.native;
 
 var feedList = document.getElementById("feed-list");
 
@@ -170,6 +170,7 @@ $('#exampleModal').on('hidden.bs.modal', function () {
     console.log(opmlPath)
     console.log(fs.readFileSync(opmlPath))
   }
+  rsshipModal.initModal();
 })
 
 $("#importOpml").on("click", () => {
@@ -240,7 +241,10 @@ async function creteFeedForOpml(opmlPath) {
     }
   }
 
-  console.log("errFeedList: ", errFeedList)
+  if(errFeedList) {
+    var errorListStr = errFeedList.join("<br>")
+    showMessageDialog("取り込みエラー", "以下のRSSは読み取れませんでした。<br>" + errorListStr)
+  }
 }
 
 function showMessageDialog(title, messageTxt) {

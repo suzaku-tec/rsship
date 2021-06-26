@@ -21,8 +21,9 @@
               <a class="dropdown-item" href="#" id="testAction">Action</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Separated link</a>
-              <a class="dropdown-item" href="#" id="opml-import" data-toggle="modal" data-target="#exampleModal" data-backdrop="true" >import</a>
-              <a class="dropdown-item" href="#" id="show progress" data-toggle="modal" data-target="#progressModal" data-backdrop="true" >show progress</a>
+              <a class="dropdown-item" href="#" id="opml-import" onclick="rsshipModal.showOpmlImportDialog()" >import</a>
+              <a class="dropdown-item" href="#" id="opml-import" onclick="rsshipModal.showProgressModal()" >show progress</a>
+              <a class="dropdown-item" href="#" id="show message" onclick="rsshipModal.showMessageDialog('test', 'test message!')" >show progress</a>
             </div>
           </div>
         </div>
@@ -110,25 +111,21 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Import Opml File</h5>
+          <h5 class="modal-title" id="exampleModalTitle"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <div id="opmlFilePath"></div>
-          <button id="opmlFileSelect" type="button" class="btn btn-primary btn-sm btn-block">ファイル選択</button>
+        <div class="modal-body" id="exampleModalBody">
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn">close</button>
-          <button type="button" class="btn btn-primary" id="importOpml">import opml</button>
+        <div class="modal-footer" id="exampleModalFooter">
         </div>
       </div>
     </div>
   </div>
 
   <!-- progress modal -->
-  <div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -144,25 +141,7 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="messageModalLabel"></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="msgModalBody">
-          <div id="messageModalMessage"></div>
-        </div>
-        <div class="modal-footer" id="msgModalFooter">
-        </div>
-      </div>
-    </div>
-  </div>
+  </div> -->
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
