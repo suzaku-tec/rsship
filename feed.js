@@ -10,10 +10,11 @@ class Feed {
    * @param {number} cnt
    * @returns
    */
-  static createFeedTag(feedName, cnt) {
+  static createFeedTag(feedName, cnt, jsonFilePath) {
     var li = document.createElement("li");
     li.className = "list-group-item d-flex justify-content-between align-items-center cursor-hand";
     li.innerText = feedName;
+    li.dataset.fp = jsonFilePath
 
     if(cnt) {
       var countIcon = this.getCountIcon(cnt)

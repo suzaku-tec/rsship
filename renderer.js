@@ -35,7 +35,7 @@ fs.readdir(feed_path, (err, fileNames) => {
     }, 0)
 
     let tagName = path.basename(fileName);
-    var feedTag = feed.createFeedTag(tagName, count);
+    var feedTag = feed.createFeedTag(tagName, count, jsonFilePath);
     feedTag.addEventListener("click", {filePath: jsonFilePath, handleEvent: setFeedItemList});
 
     feedList.appendChild(feedTag)
@@ -102,6 +102,17 @@ function reload(filePath) {
   document.getElementById("docs").value = json.feedUrl;
   document.getElementById("feedFilePath").value = filePath
 
+  let count = json.items.reduce((prev, item) => {
+    return prev + (item.isRead ? 0 : 1)
+  }, 0)
+  Array.from(document.getElementById("feed-list").children).filter(ul => {
+    return ul.dataset.fp === filePath
+  }).forEach(icon => {
+    Array.from(icon.children).forEach(span => {
+      span.textContent = count
+    })
+  })
+
   var data = json.items.filter(item => {
     return !item.isRead
   }).map(item => {
@@ -129,8 +140,6 @@ function reload(filePath) {
   // 既読処理
   grid.on("rowClick", (e, row) => {
     var link = row.cells[2].data
-
-    console.log(row)
     let feedFilePath = document.getElementById("feedFilePath").value
 
     // 選択した行を既読にする
@@ -168,6 +177,10 @@ Array.prototype.forEach.call(modalCloseElements, (mcEl) => {
 function init() {
   var tab = new Tab();
   tab.addTab("sample")
+}
+
+function isNumeric(value) {
+  return !isNaN(value)
 }
 
 rsshipModal.setupModal()
