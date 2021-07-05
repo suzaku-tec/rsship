@@ -10,7 +10,7 @@ const rsshipOpenDialog = new RsshipOpenDialog();
 const ElectronStore = require("electron-store")
 const config = new ElectronStore({
   cwd: __dirname,
-  name: "config",
+  name: "../config",
   fileExtension: 'json'
 })
 
