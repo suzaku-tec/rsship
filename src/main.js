@@ -14,6 +14,9 @@ const config = new ElectronStore({
   fileExtension: 'json'
 })
 
+const Store = require('electron-store');
+Store.initRenderer();
+
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({

@@ -22,8 +22,9 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Separated link</a>
               <a class="dropdown-item" href="#" id="opml-import" onclick="rsshipModal.showOpmlImportDialog()" >import</a>
-              <a class="dropdown-item" href="#" id="opml-import" onclick="rsshipModal.showProgressModal()" >show progress</a>
-              <a class="dropdown-item" href="#" id="show message" onclick="rsshipModal.showMessageDialog('test', 'test message!')" >show progress</a>
+              <a class="dropdown-item" href="#" id="opml-import" onclick="rsshipModal.showProgressModal()" >show progress modal</a>
+              <a class="dropdown-item" href="#" id="show message" onclick="rsshipModal.showMessageDialog('test', 'test message!')" >show message modal</a>
+              <a class="dropdown-item" href="#" id="show message" onclick="showSettingModal()" >show text modal</a>
             </div>
           </div>
         </div>
@@ -89,7 +90,6 @@
             <li class="nav-item"> <a class="nav-link" href="#">Pricing</a> </li>
             <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
           </ul>
-          <p class="mb-0 py-1">© 2014-2018 Pingendo. All rights reserved</p>
         </div>
       </div>
     </div>
@@ -98,9 +98,6 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%">50%</div>
-          </div>
         </div>
       </div>
     </div>
@@ -108,7 +105,7 @@
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width: auto; height: auto; max-height: 90%;">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalTitle"></h5>

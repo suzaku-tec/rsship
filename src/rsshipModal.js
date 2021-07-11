@@ -55,16 +55,29 @@ class RsshipModal {
   }
 
   showProgressModal(title) {
+
     var body = `
-      <div class="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+      <div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
       </div>
       `
-      this._getModalBody().append(body)
+    this._getModalBody().append(body)
 
-      var t = title ?? "進捗状況"
-      this._setModalTitle(t);
-      this._getModal().modal()
-    }
+    var t = title ?? "進捗状況"
+    this._setModalTitle(t);
+    this._getModal().modal()
+  }
+
+  showTextModal(title, text) {
+
+    var body = `
+      <textarea style="height:75vh; width: 100%;">${text}</textarea>
+      `
+    this._getModalBody().append(body)
+
+    var t = title ?? ""
+    this._setModalTitle(t);
+    this._getModal().modal()
+  }
 
   showMessageDialog(title, message) {
     this._setModalTitle(title);

@@ -14,11 +14,12 @@ let fs = window.fs;
 let path = window.path;
 let Grid = window.Grid;
 
-const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer, RsshipOpenDialog, rsshipModal } = window.native;
+const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer, RsshipOpenDialog, rsshipModal, Store } = window.native;
 
 var feedList = document.getElementById("feed-list");
 
 const feed_path = "feed";
+const store = new Store();
 
 var grid = null;
 
@@ -172,11 +173,18 @@ Array.prototype.forEach.call(modalCloseElements, (mcEl) => {
     })
 })
 
-
+function showSettingModal() {
+  const jsonObject = fs.readFileSync(store.path, 'utf8');
+  rsshipModal.showTextModal("settings", jsonObject)
+}
 
 function init() {
   var tab = new Tab();
   tab.addTab("sample")
+
+  store.set('unicorn', '🦄');
+  console.log(store.get('unicorn'));
+  console.log(store.path);
 }
 
 function isNumeric(value) {
