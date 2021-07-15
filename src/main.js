@@ -32,6 +32,8 @@ function createWindow () {
   // and load the index.html of the app.
   mainWindow.loadFile('static/design/index.html')
 
+  mainWindow.setMenuBarVisibility(false)
+
   // 開発者モードなら、開発者ツールを初期で表示する
   if( config.has('mode') &&  config.get('mode') === "dev"){
     mainWindow.webContents.openDevTools()
