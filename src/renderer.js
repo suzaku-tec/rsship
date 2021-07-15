@@ -181,10 +181,6 @@ function showSettingModal() {
 function init() {
   var tab = new Tab();
   tab.addTab("sample")
-
-  store.set('unicorn', '🦄');
-  console.log(store.get('unicorn'));
-  console.log(store.path);
 }
 
 function isNumeric(value) {

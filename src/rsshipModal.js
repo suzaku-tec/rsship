@@ -67,7 +67,7 @@ class RsshipModal {
     this._getModal().modal()
   }
 
-  showTextModal(title, text) {
+  showTextModal(title, text, footer = null) {
 
     var body = `
       <textarea style="height:75vh; width: 100%;">${text}</textarea>
@@ -76,6 +76,11 @@ class RsshipModal {
 
     var t = title ?? ""
     this._setModalTitle(t);
+
+    if(footer) {
+      this._getModalFooter().append(footer);
+    }
+
     this._getModal().modal()
   }
 
