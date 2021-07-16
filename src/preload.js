@@ -32,6 +32,8 @@ const { RsshipModal } = require("./rsshipModal")
 
 const Store = require('electron-store');
 
+const RsshipSettings = require("./rsshipSettings")
+
 const rsshipIpcRenderer = new RsshipIpcRenderer(ipcRenderer)
 
 process.once('loaded', () => {
@@ -53,5 +55,7 @@ process.once('loaded', () => {
     rsshipModal: new RsshipModal(rsshipIpcRenderer),
 
     Store: Store,
+
+    RsshipSettings: RsshipSettings,
   };
 });
