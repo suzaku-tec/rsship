@@ -1,9 +1,13 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain } = require('electron')
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
 const path = require('path')
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
 const { RsshipIpcToRendererArgs } = require("./rsshipIpcArgs")
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcM... Remove this comment to see the full error message
 const { RsshipIpcMain } = require("./rsshipIpc")
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipOpen... Remove this comment to see the full error message
 const RsshipOpenDialog = require("./rsshipOpenDialog");
 const rsshipOpenDialog = new RsshipOpenDialog();
 
@@ -14,6 +18,7 @@ const config = new ElectronStore({
   fileExtension: 'json'
 })
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Store'.
 const Store = require('electron-store');
 Store.initRenderer();
 
@@ -65,12 +70,12 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 var rsshipIpcMain = new RsshipIpcMain(ipcMain);
-rsshipIpcMain.addAsyncAction("test", (value) => {
+rsshipIpcMain.addAsyncAction("test", (value: any) => {
   console.log("rsshipIpcMain value:" + value)
   return new RsshipIpcToRendererArgs("test", "pong")
 });
 
-rsshipIpcMain.addSyncAction("test", (value) => {
+rsshipIpcMain.addSyncAction("test", (value: any) => {
   console.log("rsshipIpcMain value:" + value)
   return new RsshipIpcToRendererArgs("test", "pong")
 });

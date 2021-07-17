@@ -1,19 +1,24 @@
 'use strict';
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
 const { RsshipIpcToRendererArgs } = require("./rsshipIpcArgs");
 const { decycle } = require('json-cyclic');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcM... Remove this comment to see the full error message
 class RsshipIpcMain {
-  constructor(ipcMain) {
+  _asyncActionList: any;
+  _ipcMain: any;
+  _syncActionList: any;
+  constructor(ipcMain: any) {
     this._ipcMain = ipcMain;
     this._asyncActionList = [];
     this._syncActionList = [];
 
-    ipcMain.on('async-message', (event, request) => {
+    ipcMain.on('async-message', (event: any, request: any) => {
       console.log("request:" + JSON.stringify(decycle(request)))
       var response = this._generateErrorResponse();
       if(request.type) {
-        var eventObj = this._asyncActionList.find(asyncAction => asyncAction.type === request.type)
+        var eventObj = this._asyncActionList.find((asyncAction: any) => asyncAction.type === request.type)
         if(eventObj) {
           var result = eventObj.action(request.value)
           response = new RsshipIpcToRendererArgs(request.type, result)
@@ -22,11 +27,11 @@ class RsshipIpcMain {
       event.reply('async-reply', response)
     });
 
-    ipcMain.on('sync-message', async(event, request) => {
+    ipcMain.on('sync-message', async(event: any, request: any) => {
       console.log(request)
       var response = this._generateErrorResponse();
       if(request.type) {
-        var actionObj = this._syncActionList.find(syncAction => syncAction.type === request.type)
+        var actionObj = this._syncActionList.find((syncAction: any) => syncAction.type === request.type)
         if(actionObj) {
           console.log("actionObj:", actionObj)
           response = actionObj.action(request.value)
@@ -36,11 +41,11 @@ class RsshipIpcMain {
     });
   }
 
-  addAsyncAction(type, action) {
+  addAsyncAction(type: any, action: any) {
     this._asyncActionList.push({type: type, action: action})
   }
 
-  addSyncAction(type, action) {
+  addSyncAction(type: any, action: any) {
     this._syncActionList.push({type: type, action: action})
   }
 
@@ -50,11 +55,13 @@ class RsshipIpcMain {
 }
 
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcR... Remove this comment to see the full error message
 class RsshipIpcRenderer {
-  constructor(ipcRenderer) {
+  _ipcRenderer: any;
+  constructor(ipcRenderer: any) {
     this._ipcRenderer = ipcRenderer;
 
-    ipcRenderer.on('async-reply', (event, response) => {
+    ipcRenderer.on('async-reply', (event: any, response: any) => {
       // 受信時のコールバック関数
       console.log(response)
     });
@@ -66,25 +73,24 @@ class RsshipIpcRenderer {
    * @param {メッセージ内容} value
    * @returns 実行結果
    */
-   sendSync(type, value) {
-    var arg = new RsshipIpcToMainArgs();
-    arg.type = type
-    arg.value = value
-    return this._ipcRenderer.sendSync('sync-message', arg)
-  }
+  sendSync(type: any, value: any) {
+   var arg = new RsshipIpcToMainArgs();
+   arg.type = type
+   arg.value = value
+   return this._ipcRenderer.sendSync('sync-message', arg)
+ }
 
   /**
    * 非同期メッセージの送信
    * @param {メッセージ種別} type
    * @param {メッセージ内容} value
    */
-  sendAsync(type, value) {
+  sendAsync(type: any, value: any) {
     var arg = new RsshipIpcToMainArgs();
     arg.type = type
     arg.value = value
     this._ipcRenderer.send('async-message', arg)
   }
-
 }
 
 module.exports = {RsshipIpcMain, RsshipIpcRenderer}

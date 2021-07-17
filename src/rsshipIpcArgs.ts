@@ -4,7 +4,11 @@ const mainProcessNm = "main"
 const rendererProcessNm = "renderer"
 
 class RsshipIpcArgs {
-  constructor(to, from, type, value) {
+  from: any;
+  to: any;
+  type: any;
+  value: any;
+  constructor(to: any, from: any, type: any, value: any) {
     this.to = to;
     this.from = from;
     this.type = type;
@@ -12,8 +16,9 @@ class RsshipIpcArgs {
   }
 }
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
 class RsshipIpcToMainArgs extends RsshipIpcArgs {
-  constructor(type, value) {
+  constructor(type: any, value: any) {
     super(
       mainProcessNm,
       rendererProcessNm,
@@ -23,8 +28,9 @@ class RsshipIpcToMainArgs extends RsshipIpcArgs {
   }
 }
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
 class RsshipIpcToRendererArgs extends RsshipIpcArgs {
-  constructor(type, value) {
+  constructor(type: any, value: any) {
     super(
       rendererProcessNm,
       mainProcessNm,
