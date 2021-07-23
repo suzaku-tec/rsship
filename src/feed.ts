@@ -2,7 +2,7 @@
 
 let Parser = require('rss-parser');
 let parser = new Parser();
-class Feed {
+export default class Feed {
 
   /**
    *
@@ -52,5 +52,3 @@ class Feed {
     return rssItem;
   }
 }
-
-module.exports = Feed

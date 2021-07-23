@@ -1,11 +1,9 @@
 'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
-const { RsshipIpcToRendererArgs } = require("./rsshipIpcArgs");
-const { decycle } = require('json-cyclic');
+import { RsshipIpcToRendererArgs } from "./rsshipIpcArgs";
+import { decycle } from 'json-cyclic';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcM... Remove this comment to see the full error message
-class RsshipIpcMain {
+export class RsshipIpcMain {
   _asyncActionList: any;
   _ipcMain: any;
   _syncActionList: any;
@@ -55,8 +53,7 @@ class RsshipIpcMain {
 }
 
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcR... Remove this comment to see the full error message
-class RsshipIpcRenderer {
+export class RsshipIpcRenderer {
   _ipcRenderer: any;
   constructor(ipcRenderer: any) {
     this._ipcRenderer = ipcRenderer;
@@ -93,4 +90,4 @@ class RsshipIpcRenderer {
   }
 }
 
-module.exports = {RsshipIpcMain, RsshipIpcRenderer}
+// module.exports = {RsshipIpcMain, RsshipIpcRenderer}

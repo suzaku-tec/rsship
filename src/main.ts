@@ -1,25 +1,18 @@
-// Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain } = require('electron')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
-const { RsshipIpcToRendererArgs } = require("./rsshipIpcArgs")
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcM... Remove this comment to see the full error message
-const { RsshipIpcMain } = require("./rsshipIpc")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipOpen... Remove this comment to see the full error message
-const RsshipOpenDialog = require("./rsshipOpenDialog");
+import { app, BrowserWindow, ipcMain } from 'electron';
+import path from 'path';
+import { RsshipIpcToRendererArgs } from "./rsshipIpcArgs";
+import { RsshipIpcMain } from "./rsshipIpc";
+import RsshipOpenDialog from "./rsshipOpenDialog";
 const rsshipOpenDialog = new RsshipOpenDialog();
 
-const ElectronStore = require("electron-store")
+import ElectronStore from "electron-store";
 const config = new ElectronStore({
   cwd: __dirname,
   name: "../config",
   fileExtension: 'json'
 })
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Store'.
-const Store = require('electron-store');
+import Store from 'electron-store';
 Store.initRenderer();
 
 function createWindow () {

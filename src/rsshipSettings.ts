@@ -1,8 +1,6 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'fs'.
-const fs = require('fs');
+import fs from 'fs';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipSett... Remove this comment to see the full error message
-class RsshipSettings {
+export default class RsshipSettings {
 
   static CYCLE_TIME_KEY = "cyleTime";
 
@@ -12,7 +10,6 @@ class RsshipSettings {
 
     var isWrite = false
 
-    console.log(settingJson)
     if(!(RsshipSettings.CYCLE_TIME_KEY in settingJson)) {
       settingJson[RsshipSettings.CYCLE_TIME_KEY] = 30
       isWrite = true;
@@ -24,5 +21,3 @@ class RsshipSettings {
   }
 
 }
-
-module.exports = RsshipSettings

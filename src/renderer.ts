@@ -7,21 +7,13 @@
 
 "use strict";
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'feed'.
-let feed = (window as any).feed;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Tab'.
-let Tab = (window as any).tab;
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'fs'.
-let fs = (window as any).fs;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-let path = (window as any).path;
+let feed = (global as any).feed;
+let RsshipTab = (global as any).RsshipTab;
+let fs = (global as any).fs;
+let path = (global as any).path;
 // @ts-expect-error ts-migrate(2551) FIXME: Property 'Grid' does not exist on type 'Window & t... Remove this comment to see the full error message
-let Grid = window.Grid;
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ipcRendere... Remove this comment to see the full error message
-const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer, RsshipOpenDialog, rsshipModal, Store, RsshipSettings, } = (window as any).native;
-
+let Grid = global.Grid;
+const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer, RsshipOpenDialog, rsshipModal, Store, RsshipSettings, } = (global as any).native;
 var feedList = document.getElementById("feed-list");
 
 const feed_path = "feed";
@@ -50,8 +42,7 @@ fs.readdir(feed_path, (err: any, fileNames: any) => {
       handleEvent: setFeedItemList,
     });
 
-    // @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
-    feedList.appendChild(feedTag);
+    feedList?.appendChild(feedTag);
   });
 });
 
@@ -67,14 +58,13 @@ function setFeedItemList(this: any, e: any) {
 }
 
 var reloadButton = document.getElementById("reloadButton");
-// @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
-reloadButton.addEventListener("click", async () => {
+reloadButton?.addEventListener("click", async () => {
   // サイトから最新のフィード情報取得
-var docs = (document.getElementById("docs") as any).value;
+  var docs = (document.getElementById("docs") as any).value;
   var feedItems = await feed.getRssFeed(docs);
 
   // ファイルのフィード情報取得
-var feedFilePath = (document.getElementById("feedFilePath") as any).value;
+  var feedFilePath = (document.getElementById("feedFilePath") as any).value;
   let json = JSON.parse(fs.readFileSync(feedFilePath, "utf8"));
 
   // 差分の抽出
@@ -184,20 +174,19 @@ var modalCloseElements = document.getElementsByClassName("modal-close");
 Array.prototype.forEach.call(modalCloseElements, (mcEl) => {
   mcEl.addEventListener("click", () => {
     var dialog = document.getElementById("msg-modal");
-    // @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
-    dialog.classList.remove("modal.show");
-    // @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
-    dialog.classList.add("modal.fade");
+    dialog?.classList.remove("modal.show");
+    dialog?.classList.add("modal.fade");
   });
 });
 
-function showSettingModal() {
+window.showSettingModal = function showSettingModal() {
+  console.log("showSettingModal")
   const jsonObject = fs.readFileSync(store.path, "utf8");
   rsshipModal.showTextModal("settings", jsonObject);
 }
 
 function init() {
-  var tab = new Tab();
+  var tab = new RsshipTab();
   tab.addTab("sample");
 
   rsshipSettings = new RsshipSettings()

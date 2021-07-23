@@ -1,7 +1,6 @@
 'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Tab'.
-class Tab {
+export default class RsshipTab {
   navTabs: any;
   tabContent: any;
 
@@ -12,8 +11,7 @@ class Tab {
 
   addTab(title: any) {
     const navTabLi = this._createNavTabLi("#" + title, title)
-    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
-    const tabPane = this._createTabPaneDiv(title)
+    const tabPane = this._createTabPaneDiv(title, "")
 
     this.navTabs.appendChild(navTabLi)
     this.tabContent.appendChild(tabPane)
@@ -47,6 +45,3 @@ class Tab {
     return tabPane;
   }
 }
-
-module.exports = Tab
-

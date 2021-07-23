@@ -1,16 +1,13 @@
 'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'fs'.
-const fs = require('fs');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
-const { RsshipIpcToMainArgs } = require("./rsshipIpcArgs")
+import { RsshipIpcToMainArgs } from "./rsshipIpcArgs";
 
 const MODAL_NAME = '#exampleModal'
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipModa... Remove this comment to see the full error message
-class RsshipModal {
+
+export default class RsshipModal {
   _rsshipIpcRenderer: any;
 
   constructor(rsshipIpcRenderer: any) {
@@ -23,7 +20,7 @@ class RsshipModal {
       var opmlPath = document.getElementById("opmlFilePath");
       if(opmlPath && opmlPath.nodeValue) {
         console.log(opmlPath)
-        console.log(fs.readFileSync(opmlPath))
+        console.log(fs.readFileSync(opmlPath.nodeValue))
       }
 
       this._initModal();
@@ -135,8 +132,6 @@ class RsshipModal {
 
   //openFileボタンが押されたとき（ファイル名取得まで）
   _openFile() {
-    var arg = new RsshipIpcToMainArgs();
-    arg.type = RsshipOpenDialog.MessageType;
     var res = rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
     // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $("#opmlFilePath").text(res)
@@ -168,9 +163,6 @@ class RsshipModal {
           fs.writeFileSync(
             path.resolve(feedFilePath),
             JSON.stringify(feedItems, null, 2),
-            (err: any) => {
-              if (err) throw err;
-            }
           );
         } catch(e) {
           errFeedList.push(feedTitle)
@@ -184,6 +176,3 @@ class RsshipModal {
     }
   }
 }
-
-module.exports = { RsshipModal }
-

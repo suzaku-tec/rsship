@@ -94,3 +94,6 @@ config.json
 
 # feed json
 feed/
+
+# build folder
+dist/

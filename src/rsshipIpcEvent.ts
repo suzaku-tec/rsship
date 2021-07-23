@@ -1,7 +1,6 @@
 'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RssIpcEven... Remove this comment to see the full error message
-class RssIpcEvent {
+export default class RssIpcEvent {
   mainProcAction() {
     throw new Error("Not overridden!")
   }
@@ -10,5 +9,3 @@ class RssIpcEvent {
     throw new Error("Not overridden!")
   }
 }
-
-module.exports = RssIpcEvent

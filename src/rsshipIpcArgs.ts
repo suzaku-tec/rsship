@@ -16,8 +16,7 @@ class RsshipIpcArgs {
   }
 }
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
-class RsshipIpcToMainArgs extends RsshipIpcArgs {
+export class RsshipIpcToMainArgs extends RsshipIpcArgs {
   constructor(type: any, value: any) {
     super(
       mainProcessNm,
@@ -28,8 +27,7 @@ class RsshipIpcToMainArgs extends RsshipIpcArgs {
   }
 }
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
-class RsshipIpcToRendererArgs extends RsshipIpcArgs {
+export class RsshipIpcToRendererArgs extends RsshipIpcArgs {
   constructor(type: any, value: any) {
     super(
       rendererProcessNm,
@@ -38,9 +36,4 @@ class RsshipIpcToRendererArgs extends RsshipIpcArgs {
       value
     )
   }
-}
-
-module.exports = {
-  RsshipIpcToMainArgs,
-  RsshipIpcToRendererArgs
 }

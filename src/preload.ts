@@ -11,52 +11,42 @@
 //   }
 // })
 
-'use strict';
+"use strict";
 
 //　npm library
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'fs'.
-const fs = require('fs');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path');
-const gridjs = require("gridjs")
-const log = require('electron-log');
+import * as fs from "fs";
+import * as path from "path";
+import * as gridjs from "gridjs";
+import * as log from "electron-log";
+import { ipcRenderer } from "electron";
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ipcRendere... Remove this comment to see the full error message
-const { ipcRenderer } = require('electron');
 // original library
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'feed'.
-const feed = require("./feed");
-const tab = require("./tab");
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcT... Remove this comment to see the full error message
-const { RsshipIpcToMainArgs, RsshipIpcToRendererArgs } = require("./rsshipIpcArgs")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RssIpcEven... Remove this comment to see the full error message
-const RssIpcEvent =  require("./rsshipIpcEvent")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipOpen... Remove this comment to see the full error message
-const RsshipOpenDialog = require("./rsshipOpenDialog")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipIpcM... Remove this comment to see the full error message
-const { RsshipIpcMain, RsshipIpcRenderer } = require("./rsshipIpc")
+import Feed from "./feed";
+import RsshipTab from "./RsshipTab";
+import { RsshipIpcToMainArgs, RsshipIpcToRendererArgs } from "./rsshipIpcArgs";
+import RssIpcEvent from "./rsshipIpcEvent";
+import RsshipOpenDialog from "./rsshipOpenDialog";
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipModa... Remove this comment to see the full error message
-const { RsshipModal } = require("./rsshipModal")
+import { RsshipIpcRenderer } from "./rsshipIpc";
+import RsshipModal from "./rsshipModal";
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Store'.
-const Store = require('electron-store');
+import Store from "electron-store";
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RsshipSett... Remove this comment to see the full error message
-const RsshipSettings = require("./rsshipSettings")
+import RsshipSettings from "./rsshipSettings";
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'rsshipIpcR... Remove this comment to see the full error message
-const rsshipIpcRenderer = new RsshipIpcRenderer(ipcRenderer)
+const rsshipIpcRenderer = new RsshipIpcRenderer(ipcRenderer);
 
-// @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
-process.once('loaded', () => {
-  (global as any).feed = feed;
+console.log("RsshipModal:", RsshipModal)
+var rsshipModal = new RsshipModal(rsshipIpcRenderer)
+
+process.once("loaded", () => {
+  (global as any).feed = Feed;
   (global as any).fs = fs;
   (global as any).path = path;
   // @ts-expect-error ts-migrate(2551) FIXME: Property 'Grid' does not exist on type 'Global & t... Remove this comment to see the full error message
   global.Grid = gridjs.Grid;
   (global as any).log = log;
-  (global as any).tab = tab;
+  (global as any).RsshipTab = RsshipTab;
 
   (global as any).native = {
     ipcRenderer: ipcRenderer,
@@ -65,8 +55,9 @@ process.once('loaded', () => {
     RsshipIpcToRendererArgs: RsshipIpcToRendererArgs,
     RssIpcEvent: RssIpcEvent,
     RsshipOpenDialog: RsshipOpenDialog,
-    rsshipModal: new RsshipModal(rsshipIpcRenderer),
+    rsshipModal: rsshipModal,
     Store: Store,
     RsshipSettings: RsshipSettings,
-};
+  };
+  (window as any).global = window;
 });
