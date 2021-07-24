@@ -107,8 +107,10 @@ function reload(filePath: any) {
   let count = json.items.reduce((prev: any, item: any) => {
     return prev + (item.isRead ? 0 : 1);
   }, 0);
-  // @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
-  Array.from(document.getElementById("feed-list").children)
+
+  var tmpFeedList = document.getElementById("feed-list");
+
+  if(tmpFeedList) Array.from(tmpFeedList.children)
     .filter((ul) => {
       return (ul as any).dataset.fp === filePath;
     })
@@ -191,16 +193,6 @@ function init() {
   rsshipSettings = new RsshipSettings()
   rsshipSettings.init(store);
 }
-
-// function setReloadTimer() {
-//   var time = getSettingValue(RsshipSettings.CYCLE_TIME_KEY)
-
-//   setInterval(() => {
-//     reload
-//   }, time)
-
-
-// }
 
 function getSettingValue(key: any) {
   const jsonObject = fs.readFileSync(store.path, 'utf8');
