@@ -43,8 +43,7 @@ process.once("loaded", () => {
   (global as any).feed = Feed;
   (global as any).fs = fs;
   (global as any).path = path;
-  // @ts-expect-error ts-migrate(2551) FIXME: Property 'Grid' does not exist on type 'Global & t... Remove this comment to see the full error message
-  global.Grid = gridjs.Grid;
+  global.grid = gridjs.Grid;
   (global as any).log = log;
   (global as any).RsshipTab = RsshipTab;
 

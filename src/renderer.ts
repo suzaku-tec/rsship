@@ -11,8 +11,7 @@ let feed = (global as any).feed;
 let RsshipTab = (global as any).RsshipTab;
 let fs = (global as any).fs;
 let path = (global as any).path;
-// @ts-expect-error ts-migrate(2551) FIXME: Property 'Grid' does not exist on type 'Window & t... Remove this comment to see the full error message
-let Grid = global.Grid;
+let Grid = global.grid;
 const { ipcRenderer, RsshipIpcToMainArgs, rsshipIpcRenderer, RsshipOpenDialog, rsshipModal, Store, RsshipSettings, } = (global as any).native;
 var feedList = document.getElementById("feed-list");
 
