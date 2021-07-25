@@ -1,21 +1,23 @@
 'use strict';
 
-class Tab {
+export default class RsshipTab {
+  navTabs: any;
+  tabContent: any;
 
   constructor() {
     this.navTabs = document.getElementById("navTabs")
     this.tabContent = document.getElementById("tabContent")
   }
 
-  addTab(title) {
+  addTab(title: any) {
     const navTabLi = this._createNavTabLi("#" + title, title)
-    const tabPane = this._createTabPaneDiv(title)
+    const tabPane = this._createTabPaneDiv(title, "")
 
     this.navTabs.appendChild(navTabLi)
     this.tabContent.appendChild(tabPane)
   }
 
-  _createNavTabLi(target, name) {
+  _createNavTabLi(target: any, name: any) {
     // <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabthree">Tab 3</a> </li>
     const li = document.createElement("li")
     li.classList.add("nav-item");
@@ -31,7 +33,7 @@ class Tab {
     return li;
   }
 
-  _createTabPaneDiv(name, content) {
+  _createTabPaneDiv(name: any, content: any) {
   //   <div class="tab-pane fade" id="tabtwo" role="tabpanel">
   // </div>
     const tabPane = document.createElement("div");
@@ -43,6 +45,3 @@ class Tab {
     return tabPane;
   }
 }
-
-module.exports = Tab
-

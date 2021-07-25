@@ -1,20 +1,18 @@
-// Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain } = require('electron')
-const path = require('path')
-const { RsshipIpcToRendererArgs } = require("./rsshipIpcArgs")
-
-const { RsshipIpcMain } = require("./rsshipIpc")
-const RsshipOpenDialog = require("./rsshipOpenDialog");
+import { app, BrowserWindow, ipcMain } from 'electron';
+import path from 'path';
+import { RsshipIpcToRendererArgs } from "./rsshipIpcArgs";
+import { RsshipIpcMain } from "./rsshipIpc";
+import RsshipOpenDialog from "./rsshipOpenDialog";
 const rsshipOpenDialog = new RsshipOpenDialog();
 
-const ElectronStore = require("electron-store")
+import ElectronStore from "electron-store";
 const config = new ElectronStore({
   cwd: __dirname,
   name: "../config",
   fileExtension: 'json'
 })
 
-const Store = require('electron-store');
+import Store from 'electron-store';
 Store.initRenderer();
 
 function createWindow () {
@@ -65,12 +63,12 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 var rsshipIpcMain = new RsshipIpcMain(ipcMain);
-rsshipIpcMain.addAsyncAction("test", (value) => {
+rsshipIpcMain.addAsyncAction("test", (value: any) => {
   console.log("rsshipIpcMain value:" + value)
   return new RsshipIpcToRendererArgs("test", "pong")
 });
 
-rsshipIpcMain.addSyncAction("test", (value) => {
+rsshipIpcMain.addSyncAction("test", (value: any) => {
   console.log("rsshipIpcMain value:" + value)
   return new RsshipIpcToRendererArgs("test", "pong")
 });

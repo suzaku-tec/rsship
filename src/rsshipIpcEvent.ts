@@ -1,6 +1,6 @@
 'use strict';
 
-class RssIpcEvent {
+export default class RssIpcEvent {
   mainProcAction() {
     throw new Error("Not overridden!")
   }
@@ -9,5 +9,3 @@ class RssIpcEvent {
     throw new Error("Not overridden!")
   }
 }
-
-module.exports = RssIpcEvent

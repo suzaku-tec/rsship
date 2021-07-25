@@ -1,14 +1,16 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-const { RsshipIpcToMainArgs } = require("./rsshipIpcArgs")
+import { RsshipIpcToMainArgs } from "./rsshipIpcArgs";
 
 const MODAL_NAME = '#exampleModal'
-class RsshipModal {
 
-  constructor(rsshipIpcRenderer) {
+export default class RsshipModal {
+  _rsshipIpcRenderer: any;
+
+  constructor(rsshipIpcRenderer: any) {
     this._rsshipIpcRenderer = rsshipIpcRenderer;
   }
 
@@ -17,7 +19,7 @@ class RsshipModal {
       var opmlPath = document.getElementById("opmlFilePath");
       if(opmlPath && opmlPath.nodeValue) {
         console.log(opmlPath)
-        console.log(fs.readFileSync(opmlPath))
+        console.log(fs.readFileSync(opmlPath.nodeValue))
       }
 
       this._initModal();
@@ -54,7 +56,7 @@ class RsshipModal {
     this._getModal().modal()
   }
 
-  showProgressModal(title) {
+  showProgressModal(title: any) {
 
     var body = `
       <div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
@@ -67,7 +69,7 @@ class RsshipModal {
     this._getModal().modal()
   }
 
-  showTextModal(title, text, footer = null) {
+  showTextModal(title: any, text: any, footer: (string | null) = null) {
 
     var body = `
       <textarea style="height:75vh; width: 100%;">${text}</textarea>
@@ -84,14 +86,14 @@ class RsshipModal {
     this._getModal().modal()
   }
 
-  showMessageDialog(title, message) {
+  showMessageDialog(title: any, message: any) {
     this._setModalTitle(title);
     this._getModalBody().append(message)
     this._getModal().modal()
   }
 
   _modalFade() {
-    this._getModal().fade()
+    this._getModal().fadeOut()
   }
 
   _getModal() {
@@ -106,7 +108,7 @@ class RsshipModal {
     return $('#exampleModalFooter')
   }
 
-  _setModalTitle(title) {
+  _setModalTitle(title: any) {
     $("#exampleModalTitle").text(title)
   }
 
@@ -118,13 +120,11 @@ class RsshipModal {
 
   //openFileボタンが押されたとき（ファイル名取得まで）
   _openFile() {
-    var arg = new RsshipIpcToMainArgs();
-    arg.type = RsshipOpenDialog.MessageType;
     var res = rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
     $("#opmlFilePath").text(res)
   }
 
-  async _creteFeedForOpml(opmlPath) {
+  async _creteFeedForOpml(opmlPath: any) {
     var contents = fs.readFileSync(opmlPath, 'utf8')
     const opml = new DOMParser().parseFromString(contents, "text/xml");
 
@@ -150,9 +150,6 @@ class RsshipModal {
           fs.writeFileSync(
             path.resolve(feedFilePath),
             JSON.stringify(feedItems, null, 2),
-            (err) => {
-              if (err) throw err;
-            }
           );
         } catch(e) {
           errFeedList.push(feedTitle)
@@ -165,8 +162,4 @@ class RsshipModal {
       this.showMessageDialog("取り込みエラー", "以下のRSSは読み取れませんでした。<br>" + errorListStr)
     }
   }
-
 }
-
-module.exports = { RsshipModal }
-

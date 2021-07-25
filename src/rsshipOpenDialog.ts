@@ -1,9 +1,9 @@
 'use strict';
 
-const RssIpcEvent = require("./rsshipIpcEvent");
-const { dialog } = require('electron')
+import RssIpcEvent from "./rsshipIpcEvent";
+import { dialog } from 'electron';
 
-class RsshipOpenDialog extends RssIpcEvent {
+export default class RsshipOpenDialog extends RssIpcEvent {
 
   static MessageType = "showOpenDialog"
 
@@ -11,5 +11,3 @@ class RsshipOpenDialog extends RssIpcEvent {
     return dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'] });
   }
 }
-
-module.exports = RsshipOpenDialog;

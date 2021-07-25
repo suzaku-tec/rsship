@@ -1,16 +1,15 @@
-const fs = require('fs');
+import fs from 'fs';
 
-class RsshipSettings {
+export default class RsshipSettings {
 
   static CYCLE_TIME_KEY = "cyleTime";
 
-  init(store) {
+  init(store: any) {
     const jsonObject = fs.readFileSync(store.path, 'utf8');
     const settingJson = JSON.parse(jsonObject)
 
     var isWrite = false
 
-    console.log(settingJson)
     if(!(RsshipSettings.CYCLE_TIME_KEY in settingJson)) {
       settingJson[RsshipSettings.CYCLE_TIME_KEY] = 30
       isWrite = true;
@@ -22,5 +21,3 @@ class RsshipSettings {
   }
 
 }
-
-module.exports = RsshipSettings

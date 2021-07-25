@@ -2,21 +2,43 @@
   "name": "rsship",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "build-dev3": "webpack --mode=development",
+    "build-dev": "run-s clean build-dev-renderer build-dev-main",
+    "build-dev-renderer": "webpack --mode=development --config webpack.config.renderer.js",
+    "build-dev-main": "webpack --mode=development --config webpack.config.main.js",
+    "clean": "rimraf dist",
+    "build-dev:start": "run-s build-dev start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
     "electron": "^12.0.6",
     "electron-log": "^4.3.5",
     "electron-store": "^8.0.0",
     "gridjs": "^4.0.0",
     "json-cyclic": "^1.0.2",
     "node-fetch": "^2.6.1",
-    "rss-parser": "^3.12.0"
+    "npm-run-all": "^4.1.5",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "rss-parser": "^3.12.0",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.4"
+  },
+  "devDependencies": {
+    "dts-gen": "^0.6.0",
+    "ts-loader": "^9.2.3",
+    "ts-migrate": "^0.1.20",
+    "typescript": "^4.2.4",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2"
   }
 }

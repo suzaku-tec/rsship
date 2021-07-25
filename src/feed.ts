@@ -2,7 +2,7 @@
 
 let Parser = require('rss-parser');
 let parser = new Parser();
-class Feed {
+export default class Feed {
 
   /**
    *
@@ -10,7 +10,7 @@ class Feed {
    * @param {number} cnt
    * @returns
    */
-  static createFeedTag(feedName, cnt, jsonFilePath) {
+  static createFeedTag(feedName: any, cnt: any, jsonFilePath: any) {
     var li = document.createElement("li");
     li.className = "list-group-item d-flex justify-content-between align-items-center cursor-hand";
     li.innerText = feedName;
@@ -29,7 +29,7 @@ class Feed {
    * @param {Number} count
    * @returns
    */
-  static getCountIcon(count) {
+  static getCountIcon(count: any) {
 
     // アイコンタグの生成
     var span = document.createElement("span")
@@ -39,17 +39,16 @@ class Feed {
     if(!isNaN(count) && isFinite(count)) {
       span.innerText = count;
     } else {
+      // @ts-expect-error ts-migrate(2322) FIXME: Type 'number' is not assignable to type 'string'.
       span.innerText = 0;
     }
 
     return span;
   }
 
-  static async getRssFeed(url) {
+  static async getRssFeed(url: any) {
     let rssItem = await parser.parseURL(url);
     rssItem.feedUrl = url
     return rssItem;
   }
 }
-
-module.exports = Feed

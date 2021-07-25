@@ -4,7 +4,11 @@ const mainProcessNm = "main"
 const rendererProcessNm = "renderer"
 
 class RsshipIpcArgs {
-  constructor(to, from, type, value) {
+  from: any;
+  to: any;
+  type: any;
+  value: any;
+  constructor(to: any, from: any, type: any, value: any) {
     this.to = to;
     this.from = from;
     this.type = type;
@@ -12,8 +16,8 @@ class RsshipIpcArgs {
   }
 }
 
-class RsshipIpcToMainArgs extends RsshipIpcArgs {
-  constructor(type, value) {
+export class RsshipIpcToMainArgs extends RsshipIpcArgs {
+  constructor(type: any, value: any) {
     super(
       mainProcessNm,
       rendererProcessNm,
@@ -23,8 +27,8 @@ class RsshipIpcToMainArgs extends RsshipIpcArgs {
   }
 }
 
-class RsshipIpcToRendererArgs extends RsshipIpcArgs {
-  constructor(type, value) {
+export class RsshipIpcToRendererArgs extends RsshipIpcArgs {
+  constructor(type: any, value: any) {
     super(
       rendererProcessNm,
       mainProcessNm,
@@ -32,9 +36,4 @@ class RsshipIpcToRendererArgs extends RsshipIpcArgs {
       value
     )
   }
-}
-
-module.exports = {
-  RsshipIpcToMainArgs,
-  RsshipIpcToRendererArgs
 }
