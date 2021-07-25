@@ -15,7 +15,6 @@ export default class RsshipModal {
   }
 
   setupModal() {
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $(MODAL_NAME).on('hidden.bs.modal', () => {
       var opmlPath = document.getElementById("opmlFilePath");
       if(opmlPath && opmlPath.nodeValue) {
@@ -42,19 +41,15 @@ export default class RsshipModal {
     `
     this._getModalFooter().append(footer)
 
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $("#opmlFileSelect").on("click", () => {
       this._openFile();
     })
 
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $("#importOpml").on("click", () => {
-      // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
       var opmlPath = $('#opmlFilePath').text()
 
       if(opmlPath) this._creteFeedForOpml(opmlPath)
 
-      // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
       $('#exampleModal').modal('hide')
     })
 
@@ -102,38 +97,30 @@ export default class RsshipModal {
   }
 
   _getModal() {
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     return $(MODAL_NAME)
   }
 
   _getModalBody() {
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     return $('#exampleModalBody')
   }
 
   _getModalFooter() {
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     return $('#exampleModalFooter')
   }
 
   _setModalTitle(title: any) {
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $("#exampleModalTitle").text(title)
   }
 
   _initModal() {
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $("#exampleModalTitle").empty()
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $('#exampleModalBody').empty()
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $('#exampleModalFooter').empty()
   }
 
   //openFileボタンが押されたとき（ファイル名取得まで）
   _openFile() {
     var res = rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
-    // @ts-expect-error ts-migrate(2581) FIXME: Cannot find name '$'. Do you need to install type ... Remove this comment to see the full error message
     $("#opmlFilePath").text(res)
   }
 
