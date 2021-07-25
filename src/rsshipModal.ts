@@ -69,7 +69,7 @@ export default class RsshipModal {
     this._getModal().modal()
   }
 
-  showTextModal(title: any, text: any, footer = null) {
+  showTextModal(title: any, text: any, footer: (string | null) = null) {
 
     var body = `
       <textarea style="height:75vh; width: 100%;">${text}</textarea>
@@ -93,7 +93,7 @@ export default class RsshipModal {
   }
 
   _modalFade() {
-    this._getModal().fade()
+    this._getModal().fadeOut()
   }
 
   _getModal() {
