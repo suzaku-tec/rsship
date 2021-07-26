@@ -6,10 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build-dev3": "webpack --mode=development",
     "build-dev": "run-s clean build-dev-renderer build-dev-main",
-    "build-dev-renderer": "webpack --mode=development --config webpack.config.renderer.js",
-    "build-dev-main": "webpack --mode=development --config webpack.config.main.js",
+    "build-dev-renderer": "webpack --mode=development --config webpack.renderer.config.js",
+    "build-dev-main": "webpack --mode=development --config webpack.main.config.js",
     "clean": "rimraf dist",
     "build-dev:start": "run-s build-dev start"
   },
