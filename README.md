@@ -14,7 +14,7 @@ For the purpose of collecting, summarizing, and utilizing information, we aim to
 
 ### start
 
-electornを実行する。
+electronを実行する。
 前提として、ビルドが終わっている必要がある
 
 ### build-dev
@@ -33,6 +33,7 @@ electornを実行する。
 ### clean
 
 `dist`配下のファイルをすべて削除する。
+
 ### build-dev:start
 
 `build-dev` 実行後、`start` を実行する。
