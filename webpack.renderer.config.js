@@ -1,6 +1,6 @@
 module.exports = {
   entry: {
-    'renderer': './src/renderer.ts',
+    'renderer': './src/ts/renderer.ts',
   },
   devtool: 'inline-source-map',
   module: {

@@ -1,7 +1,7 @@
 module.exports = {
   entry: {
-    'main': './src/main.ts',
-    'preload': './src/preload.ts'
+    'main': './src/ts/main.ts',
+    'preload': './src/ts/preload.ts'
   },
   devtool: 'inline-source-map',
   module: {
