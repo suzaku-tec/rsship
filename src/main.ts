@@ -12,8 +12,7 @@ const config = new ElectronStore({
   fileExtension: 'json'
 })
 
-import Store from 'electron-store';
-Store.initRenderer();
+ElectronStore.initRenderer();
 
 function createWindow () {
   // Create the browser window.
