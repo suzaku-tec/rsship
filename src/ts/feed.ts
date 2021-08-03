@@ -39,8 +39,7 @@ export default class Feed {
     if(!isNaN(count) && isFinite(count)) {
       span.innerText = count;
     } else {
-      // @ts-expect-error ts-migrate(2322) FIXME: Type 'number' is not assignable to type 'string'.
-      span.innerText = 0;
+      span.innerText = "0";
     }
 
     return span;
