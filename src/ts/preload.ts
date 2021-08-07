@@ -36,7 +36,6 @@ import RsshipSettings from "./rsshipSettings";
 
 const rsshipIpcRenderer = new RsshipIpcRenderer(ipcRenderer);
 
-console.log("RsshipModal:", RsshipModal)
 var rsshipModal = new RsshipModal(rsshipIpcRenderer)
 
 process.once("loaded", () => {

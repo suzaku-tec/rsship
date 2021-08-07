@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { RsshipIpcToMainArgs } from "./rsshipIpcArgs";
+import RsshipOpenDialog from "./rsshipOpenDialog";
 
 const MODAL_NAME = '#exampleModal'
 
@@ -120,7 +120,7 @@ export default class RsshipModal {
 
   //openFileボタンが押されたとき（ファイル名取得まで）
   _openFile() {
-    var res = rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
+    var res = this._rsshipIpcRenderer.sendSync(RsshipOpenDialog.MessageType, {})
     $("#opmlFilePath").text(res)
   }
 

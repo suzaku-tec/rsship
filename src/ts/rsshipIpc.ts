@@ -1,6 +1,6 @@
 'use strict';
 
-import { RsshipIpcToRendererArgs } from "./rsshipIpcArgs";
+import { RsshipIpcToRendererArgs, RsshipIpcToMainArgs } from "./rsshipIpcArgs";
 import { decycle } from 'json-cyclic';
 
 export class RsshipIpcMain {
@@ -71,9 +71,7 @@ export class RsshipIpcRenderer {
    * @returns 実行結果
    */
   sendSync(type: any, value: any) {
-   var arg = new RsshipIpcToMainArgs();
-   arg.type = type
-   arg.value = value
+   var arg = new RsshipIpcToMainArgs(type, value);
    return this._ipcRenderer.sendSync('sync-message', arg)
  }
 
@@ -83,9 +81,7 @@ export class RsshipIpcRenderer {
    * @param {メッセージ内容} value
    */
   sendAsync(type: any, value: any) {
-    var arg = new RsshipIpcToMainArgs();
-    arg.type = type
-    arg.value = value
+    var arg = new RsshipIpcToMainArgs(type, value);
     this._ipcRenderer.send('async-message', arg)
   }
 }
